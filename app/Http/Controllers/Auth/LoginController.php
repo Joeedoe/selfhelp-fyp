@@ -26,12 +26,18 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        $user = \App\User::find($request->user()->id);
+        $user->status = 0;
+        $user->save();
         $this->performLogout($request);
         return redirect()->route('login', ['logout' => 1]);
     }
 
     protected function authenticated(Request $request, $user)
     {
+        $user = \App\User::find($user->id);
+        $user->status = 1;
+        $user->save();
         if ($request->user()->userRole == 1) {
             return redirect()->route('admin.index');
         }

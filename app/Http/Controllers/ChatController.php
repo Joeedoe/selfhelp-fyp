@@ -14,6 +14,8 @@ class ChatController extends Controller
     public function index()
     {
         //
+        $data['chats'] = \App\Chat::all();
+        return view('admin.chats');
     }
 
     /**
@@ -46,6 +48,8 @@ class ChatController extends Controller
     public function show($id)
     {
         //
+        $data['chat'] = \App\Chat::where('id', $id)->orderBy('created_at', 'ASC')->first();
+        return view('admin.message', $data);
     }
 
     /**

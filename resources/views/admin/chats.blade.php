@@ -12,28 +12,35 @@
         @endforeach
     </ul>
 </div>
-
-<table class="table table-bordered table-hovered dt">
-    <thead>
-        <th>Sender</th>
-        <th>Receiver</th>
-        <th>Action</th>
-    </thead>
-    <tbody>
-        @foreach ($chats as $chat)
-            <td>{{ $chat->sender->username }}</td>
-            <td>{{ $chat->receiver->username }}</td>
-            <td>
-                <form method="post" action="{{ route('admin.user.destroy', $user->id) }}" onsubmit="return confirm('Are you sure?')">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                </form>
-            </td>
-        @endforeach
-    </tbody>
-</table>
 @endif
 
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Chat List</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <ul class="products-list product-list-in-box">
+            @foreach($chats as $chat)
+        <li class="item">
+            <div class="product-img">
+            {{-- <img src="dist/img/default-50x50.gif" alt="Product Image"> --}}
+            </div>
+            <div class="product-info">
+            <a href="{{ route('admin.chat.show', $chat->id) }}" class="product-title">
+                    {{ $chat->freceiver->username }} >
+                    {{ $chat->fsender->username }}
+            </a>
+            <span class="product-description">
+                {{ $chat->messages->last()['created_at'] }}
+            </span>
+            </div>
+        </li>
+        @endforeach
+        <!-- /.item -->
+        </ul>
+    </div>
+    <!-- /.box-body -->
+</div>
 
 @endsection

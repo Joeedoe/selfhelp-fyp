@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,21 +20,37 @@ Route::group(['middleware' => ['auth', 'checkRole:1'], 'as' => 'admin.', 'prefix
     Route::get('users', 'AdminController@users')->name('users');
     Route::get('chats', 'AdminController@chats')->name('chats');
     Route::get('selfhelp', 'AdminController@selfhelp')->name('selfhelp');
+    Route::get('profile', 'AdminController@profile')->name('profile');
+    Route::get('profile/edit', 'AdminController@editprofile')->name('editprofile');
+    Route::get('profile/editpassword', 'AdminController@editpassword')->name('editpassword');
     Route::resource('user', 'UserController');
     Route::resource('help', 'HelpController');
+    Route::resource('chat', 'ChatController');
 });
 
 Route::group(['middleware' => ['auth', 'checkRole:2'], 'as' => 'counsellor.', 'prefix' => 'counsellor'], function () {
     Route::get('/', 'CounsellorController@index')->name('index');
     Route::get('selfhelp', 'CounsellorController@selfhelp')->name('selfhelp');
     Route::get('chats', 'CounsellorController@chats')->name('chats');
+    Route::get('newchat/{uid}', 'CounsellorController@newchat')->name('newchat');
+    Route::get('chat/{cid}', 'CounsellorController@openchat')->name('openchat');
+    Route::post('addmessage/{cid}', 'CounsellorController@addmessage')->name('addMessage');
     Route::resource('help', 'HelpController');
+    Route::get('profile', 'CounsellorController@profile')->name('profile');
+    Route::get('profile/edit', 'CounsellorController@editprofile')->name('editprofile');
+    Route::get('profile/editpassword', 'CounsellorController@editpassword')->name('editpassword');
 });
 
 Route::group(['middleware' => ['auth', 'checkRole:3'], 'as' => 'student.', 'prefix' => 'student'], function () {
     Route::get('/', 'StudentController@index')->name('index');
     Route::get('selfhelp', 'StudentController@selfhelp')->name('selfhelp');
     Route::get('chats', 'StudentController@chats')->name('chats');
+    Route::get('newchat/{uid}', 'StudentController@newchat')->name('newchat');
+    Route::get('chat/{cid}', 'StudentController@openchat')->name('openchat');
+    Route::post('addmessage/{cid}', 'StudentController@addmessage')->name('addMessage');
+    Route::get('profile', 'StudentController@profile')->name('profile');
+    Route::get('profile/edit', 'StudentController@editprofile')->name('editprofile');
+    Route::get('profile/editpassword', 'StudentController@editpassword')->name('editpassword');
 });
 
 Route::get('/home', function(){

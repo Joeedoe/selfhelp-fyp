@@ -34,7 +34,7 @@
             <h1>
                 {{ $selfhelp->title }}
             </h1>
-          </section>
+        </section>
       </div>
       <!-- /.user-block -->
       <div class="box-tools">
